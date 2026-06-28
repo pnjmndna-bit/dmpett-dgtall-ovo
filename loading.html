@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AJUKAN</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100%;
+    height:100vh;
+
+    background:linear-gradient(
+    180deg,
+    #4b148c,
+    #6d1fc7,
+    #8b3dff
+);
+
+    overflow:hidden;
+
+    font-family:Arial,sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+
+    /* FADE */
+    opacity:0;
+
+    transition:
+    opacity .5s ease;
+}
+
+/* ========================= */
+/* LOGO WRAP */
+/* ========================= */
+
+.logo-wrap{
+
+    position:absolute;
+
+    top:43%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    display:flex;
+    align-items:center;
+}
+
+.o-left,
+.v-logo,
+.o-right{
+
+    width:46px;
+
+    opacity:0;
+}
+
+.logo-icon{
+
+    width:50px;
+
+    margin-right:14px;
+
+    opacity:0;
+}
+
+/* ========================= */
+/* ANIMASI */
+/* ========================= */
+
+/* V muncul dulu */
+.v-logo{
+    animation:vShow .6s ease forwards;
+    animation-delay:.2s;
+}
+
+/* O kiri menggelinding */
+.o-left{
+    animation:oLeft .9s cubic-bezier(.22,1,.36,1) forwards;
+    animation-delay:.8s;
+}
+
+/* O kanan menggelinding */
+.o-right{
+    animation:oRight .9s cubic-bezier(.22,1,.36,1) forwards;
+    animation-delay:1.2s;
+}
+
+/* Icon OVO */
+.logo-icon{
+    animation:iconShow .7s ease forwards;
+    animation-delay:2.4s;
+}
+
+/* Geser seluruh tulisan */
+.logo-wrap{
+    animation:moveLogo .8s ease forwards;
+    animation-delay:2s;
+}
+
+/* ========================= */
+
+@keyframes vShow{
+
+    0%{
+        opacity:0;
+        transform:scale(.4);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+/* ========================= */
+
+@keyframes oLeft{
+
+    0%{
+        opacity:0;
+        transform:
+        translateX(-220px)
+        rotate(-720deg);
+    }
+
+    100%{
+        opacity:1;
+        transform:
+        translateX(0)
+        rotate(0);
+    }
+
+}
+
+/* ========================= */
+
+@keyframes oRight{
+
+    0%{
+        opacity:0;
+        transform:
+        translateX(220px)
+        rotate(720deg);
+    }
+
+    100%{
+        opacity:1;
+        transform:
+        translateX(0)
+        rotate(0);
+    }
+
+}
+
+/* ========================= */
+
+@keyframes moveLogo{
+
+    0%{
+        transform:
+        translate(-50%,-50%);
+    }
+
+    100%{
+        transform:
+        translate(-8%,-50%);
+    }
+
+}
+
+/* ========================= */
+
+@keyframes iconShow{
+
+    0%{
+        opacity:0;
+
+        transform:
+        translateX(-40px)
+        rotate(-18deg)
+        scale(.7);
+    }
+
+    100%{
+        opacity:1;
+
+        transform:
+        translateX(0)
+        rotate(0)
+        scale(1);
+    }
+
+}
+
+/* ========================= */
+/* BOTTOM */
+/* ========================= */
+
+.bottom{
+    position:absolute;
+
+    bottom:66px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:14px;
+
+    padding:0 20px;
+}
+
+/* ITEM */
+.bottom-item{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+}
+
+/* ICON */
+.bottom-item img{
+    width:38px;
+
+    height:auto;
+
+    object-fit:contain;
+}
+
+/* TEXT */
+.bottom-text{
+    color:#fff;
+
+    font-size:12px;
+    line-height:1.4;
+
+    text-align:center;
+}
+
+</style>
+</head>
+<body>
+    
+<div class="logo-wrap">
+
+    <img src="assets/ovo-icon.png" class="logo-icon">
+
+    <img src="assets/o.png" class="o-left">
+
+    <img src="assets/v.png" class="v-logo">
+
+    <img src="assets/o.png" class="o-right">
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom">
+
+    <!-- BI -->
+    <div class="bottom-item">
+
+        <img
+        src="assets/bi.png">
+
+    </div>
+
+    <!-- KOMINFO -->
+    <div class="bottom-item">
+
+        <img
+        src="assets/kominfo.png">
+
+    </div>
+
+    <!-- TEXT -->
+    <div class="bottom-text">
+
+        OVO Indonesia terdaftar dan diawasi
+        oleh Bank Indonesia dan Kominfo
+
+    </div>
+
+</div>
+
+<script>
+
+/* ========================= */
+/* FADE IN */
+/* ========================= */
+
+window.addEventListener(
+"load",
+() => {
+
+    document.body.style.opacity =
+    "1";
+
+});
+
+/* ========================= */
+/* PINDAH PAGE */
+/* ========================= */
+
+setTimeout(() => {
+
+    /* FADE OUT */
+    document.body.style.opacity =
+    "0";
+
+    /* PINDAH */
+    setTimeout(() => {
+
+        window.location.href =
+        "form.html";
+
+    },500);
+
+},4000);
+
+</script>
+
+</body>
+</html>
