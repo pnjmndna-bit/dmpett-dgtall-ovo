@@ -5,14 +5,6 @@ function(e){
 }
 );
 
-document.addEventListener(
-'touchmove',
-function(e){
-    e.preventDefault();
-},
-{ passive:false }
-);
-
 /* ===================== */
 /* POSTER SLIDER */
 /* AUTO + SWIPE + BUTTON */
