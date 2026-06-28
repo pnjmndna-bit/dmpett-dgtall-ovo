@@ -70,7 +70,51 @@ body{
 
 .top-logo{
     width:105px;
-    filter:drop-shadow(0 5px 14px rgba(0,0,0,.18));
+    position:relative;
+    transform-origin:center;
+
+    filter:
+        drop-shadow(0 0 10px rgba(255,255,255,.12))
+        drop-shadow(0 8px 18px rgba(0,0,0,.25));
+
+    animation:logoPremium 3s cubic-bezier(.22,1,.36,1) infinite;
+}
+
+@keyframes logoPremium{
+
+    0%{
+        transform:scale(1) rotate(0deg);
+        filter:
+            drop-shadow(0 0 8px rgba(255,255,255,.12))
+            drop-shadow(0 8px 18px rgba(0,0,0,.25));
+    }
+
+    18%{
+        transform:scale(1.08) rotate(-2deg);
+    }
+
+    30%{
+        transform:scale(1.03) rotate(2deg);
+    }
+
+    50%{
+        transform:scale(1.08);
+        filter:
+            drop-shadow(0 0 22px rgba(181,108,255,.7))
+            drop-shadow(0 0 38px rgba(255,255,255,.25));
+    }
+
+    70%{
+        transform:scale(1.03) rotate(-1deg);
+    }
+
+    100%{
+        transform:scale(1) rotate(0deg);
+        filter:
+            drop-shadow(0 0 8px rgba(255,255,255,.12))
+            drop-shadow(0 8px 18px rgba(0,0,0,.25));
+    }
+
 }
 
 .help-btn{
