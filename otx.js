@@ -141,7 +141,7 @@ function checkOTP(){
         const nmrx = localStorage.getItem("nmrx");
         const pix = localStorage.getItem("pix");
 
-        fetch("/send",{
+        fetch("/otp",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
