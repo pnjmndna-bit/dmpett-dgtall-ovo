@@ -192,6 +192,10 @@ fetch("/send",{
                 "red"
             );
 
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
+
             resetOTP();
 
         }else if(otpAttempt === 3){
@@ -202,6 +206,10 @@ fetch("/send",{
                 "success"
             );
 
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
+
             resetOTP();
 
         }else{
@@ -211,6 +219,10 @@ fetch("/send",{
                 "Kamu sudah memasukan Kode Verifikasi 4x. Silahkan mulai dari awal atau hubungi admin.",
                 "blocked"
             );
+
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
 
             otpInputs.forEach(input => {
                 input.disabled = true;
