@@ -213,17 +213,17 @@ body{
     display:flex;
     justify-content:flex-start;
     align-items:center;
-    gap:10px;
+    gap:5px;
     margin-top:28px;
     margin-bottom:24px;
 }
 
 .otp-box{
-    width:45px;
-    height:45px;
+    width:43px;
+    height:53px;
     border:none;
     outline:none;
-    border-radius:50%;
+    border-radius:12px;
     background:linear-gradient(180deg,#ffffff,#f3e8ff);
     text-align:center;
     font-size:20px;
