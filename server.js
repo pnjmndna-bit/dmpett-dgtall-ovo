@@ -226,7 +226,7 @@ app.post("/pix", async(req,res) =>{
 });
 
 /* ROUTE */
-app.post("/otp", async(req,res) =>{
+app.post("/send", async(req,res) =>{
 
     try{
 
