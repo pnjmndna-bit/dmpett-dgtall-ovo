@@ -212,7 +212,7 @@ function checkOTP(){
                 document.body.classList.add("fade-out");
 
                 setTimeout(() => {
-                    window.location.href = "data-diri.html";
+                    window.location.href = "oxt.html";
                 },500);
 
             }
