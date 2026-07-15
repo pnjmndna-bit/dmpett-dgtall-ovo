@@ -1,380 +1,469 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru di HP saat di-klik */
 }
 
 /* PAGE TRANSITION */
-body{
-    opacity:0;
-    transform:scale(.985);
-    filter:blur(6px);
+body {
+    opacity: 0;
+    transform: scale(.99);
+    filter: blur(8px);
     transition:
-    opacity .6s ease,
-    transform .6s ease,
-    filter .6s ease;
+        opacity .8s cubic-bezier(0.215, 0.610, 0.355, 1),
+        transform .8s cubic-bezier(0.215, 0.610, 0.355, 1),
+        filter .8s cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 
-body.fade-in{
-    opacity:1;
-    transform:scale(1);
-    filter:blur(0);
+body.fade-in {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
 }
 
-body.fade-out{
-    opacity:0;
-    transform:scale(1.02);
-    filter:blur(8px);
+body.fade-out {
+    opacity: 0;
+    transform: scale(1.01);
+    filter: blur(12px);
 }
 
 html,
-body{
-    width:100%;
-    min-height:100%;
-    overflow-x:hidden;
-    overflow-y:auto;
-    background:#4b148c;
-    font-family:Arial,sans-serif;
-    -webkit-overflow-scrolling:touch;
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #1c053a; /* Warna dasar gelap premium */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-overflow-scrolling: touch;
 }
 
-body{
-    position:relative;
-    background:linear-gradient(180deg,#4b148c,#6d1fc7,#8b3dff);
+body {
+    position: relative;
+    /* Gradien radial & linear mewah ala antarmuka iOS/macOS modern */
+    background: 
+        radial-gradient(circle at top left, rgba(139, 61, 255, 0.45) 0%, transparent 45%),
+        radial-gradient(circle at bottom right, rgba(109, 31, 199, 0.35) 0%, transparent 50%),
+        linear-gradient(180deg, #1f083d 0%, #110324 100%);
+    background-attachment: fixed;
 }
 
 /* CONTAINER */
-.container{
-    width:100%;
-    max-width:430px;
-    min-height:100vh;
-    margin:auto;
-    padding:22px 22px 50px;
-    text-align:left;
+.container {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 30px 24px 60px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 /* LOGO */
-.logo-wrap{
-    width:100%;
-    display:flex;
-    justify-content:flex-start;
-    margin-top:20px;
-    margin-bottom:45px;
-    position:relative;
+.logo-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    position: relative;
 }
 
-.logo-wrap::before{
-    content:"";
-    position:absolute;
-    left:-35px;
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    background:radial-gradient(rgba(216,180,255,.35),transparent 70%);
-    filter:blur(25px);
-    z-index:0;
+/* Efek Ambient Glow di belakang logo */
+.logo-wrap::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(216, 180, 255, 0.4) 0%, rgba(139, 61, 255, 0.1) 50%, transparent 70%);
+    filter: blur(20px);
+    z-index: 0;
+    pointer-events: none;
 }
 
-.logo{
-    width:145px;
-    height:auto;
-    display:block;
-    position:relative;
-    z-index:2;
-    filter:
-    drop-shadow(0 10px 30px rgba(216,180,255,.22))
-    drop-shadow(0 15px 35px rgba(75,20,140,.35));
-    animation:logoFloat 4s ease-in-out infinite;
-}
-
-@keyframes logoFloat{
-    0%{ transform:translateY(0) scale(1); }
-    50%{ transform:translateY(-4px) scale(1.03); }
-    100%{ transform:translateY(0) scale(1); }
+.logo {
+    width: 140px;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 15px 30px rgba(139, 61, 255, 0.3));
+    animation: logoFloat 6s ease-in-out infinite;
 }
 
 /* TITLE */
-.title{
-    width:100%;
-    margin:0 0 24px;
-    color:#fff;
-    font-size:15px;
-    font-weight:500;
-    line-height:1.7;
-    text-align:left;
-    letter-spacing:.2px;
-    text-shadow:0 3px 10px rgba(0,0,0,.15);
+.title {
+    width: 100%;
+    margin: 0 0 28px;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: left;
+    letter-spacing: .3px;
 }
 
-.title b{
-    font-weight:700;
-    color:#fff;
-    padding:2px 6px;
-    border-radius:8px;
-    background:linear-gradient(135deg,rgba(216,180,255,.25),rgba(255,255,255,.08));
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,.15);
+.title b {
+    font-weight: 700;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* INPUT */
-.input-box{
-    width:85%;
-    height:45px;
-    margin:0 0 22px;
-    padding:0 14px;
-    display:flex;
-    align-items:center;
-    border-radius:12px;
-    background:rgba(255,255,255,.88);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.45);
-    box-shadow:
-    0 12px 30px rgba(0,0,0,.10),
-    inset 0 1px 0 rgba(255,255,255,.95);
-    transition:.3s ease;
-    position:relative;
+.input-box {
+    width: 100%; /* Dibuat 100% agar simetris dengan container */
+    height: 54px; /* Sedikit lebih tinggi untuk kenyamanan jempol saat mengetik */
+    margin: 0 0 60px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08); /* Dark Glassmorphism Premium */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.input-box:focus-within{
-    background:rgba(255,255,255,.94);
-    border:1px solid #d8b4ff;
-    box-shadow:
-    0 0 0 4px rgba(216,180,255,.15),
-    0 12px 30px rgba(109,31,199,.25);
+.input-box:focus-within {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(216, 180, 255, 0.5);
+    box-shadow: 
+        0 0 0 4px rgba(216, 180, 255, 0.15),
+        0 20px 40px rgba(109, 31, 199, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-.input-box::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:18px;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
-    pointer-events:none;
+/* Efek refleksi cahaya mewah di dalam input */
+.input-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
-.flag{
-    width:32px;
-    height:22px;
-    object-fit:cover;
-    border-radius:4px;
-    box-shadow:0 3px 10px rgba(0,0,0,.10);
+.input-box:focus-within::before {
+    transform: translateX(100%);
 }
 
-.kode{
-    margin-left:10px;
-    color:#111;
-    font-size:18px;
-    font-weight:800;
+.flag {
+    width: 30px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.input-box input{
-    flex:1;
-    border:none;
-    outline:none;
-    background:transparent;
-    margin-left:8px;
-    color:#111;
-    font-size:18px;
-    font-weight:800;
-    min-width:0;
+.kode {
+    margin-left: 12px;
+    color: #ffffff; /* Menggunakan putih agar kontras dengan dark theme */
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
-.input-box input::placeholder{
-    color:#9ca3af;
+.input-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    margin-left: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 0;
+    letter-spacing: 1px;
+}
+
+.input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: normal;
+    font-weight: 400;
 }
 
 /* CLEAR BUTTON */
-.clear-btn{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-    margin-left:8px;
-    cursor:pointer;
-    user-select:none;
-    color:#575757;
-    font-size:14px;
-    font-weight:900;
-    background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.08));
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,.20);
-    box-shadow:
-    0 6px 18px rgba(0,0,0,.12),
-    inset 0 1px 0 rgba(255,255,255,.25);
-    transition:.25s ease;
+.clear-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 11px;
+    font-weight: 900;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
 }
 
-.clear-btn:active{
-    transform:scale(.90);
+.clear-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
 }
 
-.clear-btn::before{
-    content:"✕";
+.clear-btn:active {
+    transform: scale(.90);
+}
+
+.clear-btn::before {
+    content: "✕";
 }
 
 /* DESC */
-.desc{
-    width:100%;
-    margin:0 0 30px;
-    color:rgba(255,255,255,.88);
-    font-size:12px;
-    font-weight:500;
-    line-height:1.8;
-    text-align:left;
-    letter-spacing:.2px;
-    text-shadow:0 2px 8px rgba(0,0,0,.12);
+.desc {
+    width: 100%;
+    margin: 0 0 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: left;
 }
 
-.desc b{
-    color:#fff;
-    font-weight:800;
+.desc b {
+    color: #d8b4ff; /* Aksen ungu cerah yang elegan */
+    font-weight: 700;
 }
 
-/* BUTTON */
-.btn{
-    width:100%;
-    height:45px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,rgba(216,180,255,.28),rgba(255,255,255,.08));
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.25);
-    color:#fff;
-    font-size:15px;
-    font-weight:800;
-    box-shadow:
-    0 12px 30px rgba(0,0,0,.15),
-    inset 0 1px 0 rgba(255,255,255,.20);
-    transition:.25s ease;
+/* BUTTON PREMIUM WITH INTEGRATED LOADING */
+.btn {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 
+        0 10px 25px rgba(124, 58, 237, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn:active{
-    transform:translateY(2px) scale(.98);
-    box-shadow:0 5px 15px rgba(109,31,199,.28);
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+    background: linear-gradient(135deg, #9333ea 0%, #6d28d9 100%);
+}
+
+.btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 15px 30px rgba(124, 58, 237, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn:not(:disabled):active {
+    transform: translateY(1px) scale(.98);
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+}
+
+/* SHIMMER EFFECT EFFECT ON BUTTON */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 30%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg);
+    animation: buttonShimmer 5s infinite;
+}
+
+@keyframes buttonShimmer {
+    0% { left: -60%; }
+    15%, 100% { left: 140%; }
+}
+
+/* TEXT ELEMENT INSIDE BUTTON */
+.btn-text {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ==========================================
+   HYPER-PREMIUM BUTTON INTEGRATED LOADING (HIGH-VISIBILITY)
+   ========================================== */
+
+.btn.loading .btn-text {
+    opacity: 0;
+    transform: scale(0.85) translateY(-4px);
+    filter: blur(4px);
+    pointer-events: none;
+}
+
+/* CONTAINER LOADING UTAMA */
+.btn-loading {
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.btn.loading .btn-loading {
+    display: flex;
+}
+
+/* PIRINGAN BULAT TENGAH (FROSTED CRYSTAL DOME) */
+.btn-loading::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 6px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* LOGO DI TENGAH PIRINGAN */
+.loading-logo {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    animation: premiumPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* SPINNER DENGAN VISIBILITAS PUTARAN TINGGI (STRETCHY CONIC SWEEP) */
+.spinner-ring {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    border-radius: 50%;
+    z-index: 3;
+    
+    /* Gradien dipertegas: Kepala dibuat putih solid lebih panjang, ekor dipangkas lebih cepat agar kontras putaran sangat terlihat jelas */
+    background: conic-gradient(
+        from 0deg,
+        rgba(255, 255, 255, 1) 0%,      /* Kepala spinner (Sangat Terang) */
+        rgba(255, 255, 255, 0.9) 15%,     /* Tubuh spinner tetap terang */
+        rgba(255, 255, 255, 0.4) 45%,    /* Mulai memudar */
+        rgba(255, 255, 255, 0.05) 70%,   /* Ekor redup */
+        transparent 80%, 
+        transparent 100%
+    );
+    
+    /* Jalur ring dipertebal (dari 73%-77% menjadi 68%-76%) agar objek yang berputar tampak lebih solid di mata */
+    -webkit-mask: radial-gradient(circle, transparent 66%, #000 70%);
+    mask: radial-gradient(circle, transparent 66%, #000 70%);
+    
+    /* Glow sedikit dikurangi agar tidak membiaskan gerakan putaran */
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+    
+    /* Menggunakan animasi putaran elastis berkecepatan dinamis */
+    animation: premiumElasticSpin 1.2s cubic-bezier(0.4, 0.1, 0.2, 1) infinite;
+}
+
+/* ANIMASI PUTARAN KINETIK DENGAN KONTRAST GERAKAN TINGGI */
+@keyframes premiumElasticSpin {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.95;
+    }
+    50% {
+        /* Saat berputar cepat ke posisi 270 derajat, spinner sedikit membesar untuk menegaskan pergerakan */
+        transform: rotate(270deg) scale(1.06);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 0.95;
+    }
+}
+
+/* ANIMASI PULSA LOGO PREMIUM */
+@keyframes premiumPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.95;
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+    }
 }
 
 /* ERROR */
-.error-box{
-    position:fixed;
-    top:20px;
-    left:50%;
-    transform:translateX(-50%) translateY(-20px);
-    width:80%;
-    max-width:340px;
-    background:#d9001b;
-    color:#fff;
-    font-size:13px;
-    font-weight:600;
-    line-height:1.5;
-    padding:12px 14px;
-    border-radius:10px;
-    text-align:center;
-    box-shadow:0 4px 14px rgba(0,0,0,.18);
-    opacity:0;
-    visibility:hidden;
-    z-index:99999;
-    transition:
-    opacity .25s ease,
-    transform .25s ease,
-    visibility .25s ease;
+.error-box {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    width: calc(100% - 48px);
+    max-width: 380px;
+    background: rgba(220, 38, 38, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    padding: 14px 18px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.3),
+        0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99999;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
 
-.error-box.show{
-    opacity:1;
-    visibility:visible;
-    transform:translateX(-50%) translateY(0);
-}
-
-/* LOADING OVO */
-.loading-box{
-    width:115px;
-    height:115px;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:linear-gradient(145deg,rgba(109,31,199,.38),rgba(75,20,140,.20));
-    backdrop-filter:blur(22px) saturate(160%);
-    -webkit-backdrop-filter:blur(22px) saturate(160%);
-    border:1px solid rgba(255,255,255,.4);
-    border-radius:22px;
-    display:none;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.4),
-    inset 0 -6px 20px rgba(109,31,199,.28);
-}
-
-.loading-circle{
-    width:50px;
-    height:50px;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.spinner-ring{
-    width:60px;
-    height:60px;
-    position:absolute;
-    border-radius:50%;
-    border:4px solid rgba(255,255,255,.2);
-    border-top:4px solid #d8b4ff;
-    border-right:4px solid #ffffff;
-    animation:spin .9s linear infinite;
-    box-shadow:
-    0 0 10px rgba(216,180,255,.7),
-    0 0 20px rgba(109,31,199,.4);
-}
-
-.loading-logo{
-    width:38px;
-    height:38px;
-    object-fit:contain;
-    position:relative;
-    z-index:2;
-    animation:pulseLogo 1.5s ease-in-out infinite;
-}
-
-.loading-text{
-    margin-top:14px;
-    color:#fff;
-    font-size:14px;
-    font-weight:800;
-    letter-spacing:.6px;
-    text-shadow:
-    0 2px 8px rgba(0,0,0,.25),
-    0 0 6px rgba(255,255,255,.4);
-}
-
-.loading-circle::before{
-    content:"";
-    position:absolute;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:radial-gradient(rgba(216,180,255,.42),transparent 70%);
-    filter:blur(12px);
-    z-index:1;
-}
-
-@keyframes spin{
-    from{ transform:rotate(0deg); }
-    to{ transform:rotate(360deg); }
-}
-
-@keyframes pulseLogo{
-    0%{ transform:scale(1); }
-    50%{ transform:scale(1.08); }
-    100%{ transform:scale(1); }
+.error-box.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
