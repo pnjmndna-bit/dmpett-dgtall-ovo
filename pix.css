@@ -107,11 +107,6 @@ body {
     animation: logoFloat 6s ease-in-out infinite;
 }
 
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-5px) scale(1.015); }
-}
-
 /* ========================================= */
 /* TYPOGRAPHY WITH CHROME CAPSULE GLASS      */
 /* ========================================= */
@@ -146,14 +141,14 @@ body {
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 18px;
     position: relative; /* Menjadi jangkar penentu posisi absolut loading container */
 }
 
 .pix-box {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.14);
     outline: none;
@@ -329,13 +324,13 @@ body {
 /* PREMIUM ULTRA-BLUR GLASS BUTTON          */
 /* ========================================= */
 .show-btn {
-    width: 145px;
-    height: 38px;
-    margin-top: 32px;
+    width: 110px;
+    height: 35px;
+    margin-top: 25px;
     border: none;
     border-radius: 999px;
     color: #ffffff;
-    font-size: 13px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.3px;
     cursor: pointer;
@@ -368,13 +363,13 @@ body {
 .lupa {
     display: flex;
     width: max-content;
-    margin: auto 0 0 0; /* Mendorong tombol otomatis ke paling bawah */
+    margin-top:40px; /* Mendorong tombol otomatis ke paling bawah */
     padding: 12px 24px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.8);
-    font-size: 13px;
+    font-size: 10px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
